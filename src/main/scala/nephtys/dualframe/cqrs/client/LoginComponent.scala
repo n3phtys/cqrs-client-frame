@@ -7,9 +7,8 @@ import angulate2.std.{@@, Component}
   */
 @Component(
   selector = "login-area",
-  template = "<b>I am a login area</b>",
-  providers = @@[TokenService]
+  template = """<div class="well well-sm"><login-control></login-control><login-info></login-info></div>"""
 )
-class LoginComponent(val tokenService: TokenService) {
+class LoginComponent() {
 
 }

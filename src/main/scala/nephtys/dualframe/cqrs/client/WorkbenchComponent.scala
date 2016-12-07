@@ -7,8 +7,9 @@ import angulate2.std.Component
   */
 @Component(
   selector = "my-workbench",
-  template = "<h1>I have loaded</h1><login-area></login-area>"
+  template = """<div class="container"><h1>Workbench Angulate2</h1><login-area></login-area></div>"""
 )
 class WorkbenchComponent {
 
+  //TODO: tab like pre choice for different protocols
 }
