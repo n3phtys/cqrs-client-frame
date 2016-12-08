@@ -27,7 +27,7 @@ lazy val root = Project("cqrs-client-frame", file("."))
       "com.lihaoyi" %%% "upickle" % "0.4.3",
       "com.github.marklister" %%% "base64" % "0.2.3"
     ),
-    ngBootstrap := Some("nephtys.dualframe.cqrs.client.ClientFrameModule"),
+    ngBootstrap := Some("nephtys.dualframe.cqrs.client.AppModule"),
     scalacOptions ++= Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-target:jvm-1.8", "-unchecked",
       "-Ywarn-adapted-args", "-Ywarn-value-discard", "-Xlint"),
     jsDependencies += "org.webjars.npm" % "rxjs" % "5.0.0-rc.4" / "bundles/Rx.min.js" commonJSName "Rx",
