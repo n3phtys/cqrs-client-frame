@@ -17,8 +17,7 @@ import angulate2.std.{@@, Component}
      <div *ngIf="loggedIn"><button type="button" class="btn btn-danger"
        (click)="logoutClicked()">Logout</button></div>
      </div>
-    """,
-  providers = @@[TokenService]
+    """
 )
 class LoginControlComponent(val tokenService: TokenService) {
 

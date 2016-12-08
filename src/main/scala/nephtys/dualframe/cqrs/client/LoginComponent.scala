@@ -9,6 +9,6 @@ import angulate2.std.{@@, Component}
   selector = "login-area",
   template = """<div class="well well-sm"><login-control></login-control><login-info></login-info></div>"""
 )
-class LoginComponent() {
+class LoginComponent {
 
 }

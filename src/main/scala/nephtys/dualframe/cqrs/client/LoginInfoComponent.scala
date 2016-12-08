@@ -18,8 +18,7 @@ import scala.scalajs.js.Date
        <li>Token is running out at {{date}}</li>
       </ul>
       </div>
-    """,
-  providers = @@[TokenService]
+    """
 )
 class LoginInfoComponent(val tokenService: TokenService) {
   var date : String = "N/A"
