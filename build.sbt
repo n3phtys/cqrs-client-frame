@@ -1,3 +1,5 @@
+import sbt.ProjectRef
+
 enablePlugins(ScalaJSPlugin)
 enablePlugins(Angulate2Plugin)
 
@@ -12,7 +14,7 @@ scalaVersion := "2.11.8"
 val genericProtocolurl =  "https://github.com/n3phtys/cqrs-dual-frame.git"
 
 
-lazy val genericProtocolProject = RootProject(uri(genericProtocolurl))
+lazy val genericProtocolProject = ProjectRef(uri(genericProtocolurl), "cqrsdualframeJS")
 
 
 lazy val root = Project("cqrs-client-frame", file("."))
