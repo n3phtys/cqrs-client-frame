@@ -7,7 +7,12 @@ import angulate2.std.Component
   */
 @Component(
   selector = "my-workbench",
-  template = """<div class="container"><h1>Workbench Angulate2</h1><login-area></login-area></div>"""
+  template =
+    """<div class="container"><h1>Workbench Angulate2</h1>
+      |<login-area></login-area>
+      |<dot-control></dot-control></div>
+      |
+    """.stripMargin
 )
 class WorkbenchComponent {
 

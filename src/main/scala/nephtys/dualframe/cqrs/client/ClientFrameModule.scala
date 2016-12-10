@@ -9,7 +9,7 @@ import angulate2.std.{@@, NgModule}
 @NgModule(
   imports = @@[BrowserModule],
   providers = @@[TokenService, HttpService],
-  declarations = @@[WorkbenchComponent,LoginComponent, LoginControlComponent, LoginInfoComponent]
+  declarations = @@[WorkbenchComponent, DotComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
   //bootstrap = @@[WorkbenchComponent]
   ,exports = @@[LoginComponent]
 )
