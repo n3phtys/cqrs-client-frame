@@ -13,7 +13,7 @@ import scala.scalajs.js
   selector = "dot-control",
   template =
     """
-      |<div><h2>This is a dot control</h2>
+      |<div class="fullcontainer">
       |<label for="circlecontainer" >{{name}}:</label>
       |<div id="circlecontainer" *ngFor="let instance of values; let i = index">
       |<div id="circle" *ngIf="instance" [style.background]="color" (click)="clickedCircle(i)">{{i+1}}</div>
@@ -22,8 +22,13 @@ import scala.scalajs.js
       |</div>""".stripMargin,
   styles = @@@(    """
       |label {
+      |display: inline-block;
+      |width : 90px;
       |font-weight: bold;
-      |font-size: 125%;
+      |}
+      |
+      |.fullcontainer {
+      |
       |}
       |
       |#circlecontainer {
@@ -31,7 +36,7 @@ import scala.scalajs.js
       |border: 1px solid black;
       |}
       |#circle {
-      |display: inline-block;
+      |/*display: inline-block;*/
       |background : grey;
       |//background-image: -webkit-radial-gradient(45px 45px, circle cover, yellow, orange);
       |color:white;
@@ -76,11 +81,11 @@ class DotComponent{
     if(value == index+1) {
       //unset
       values(index) = false
-      value = index
+      value = Math.max(min, index)
     } else {
       //set
       values(index) = true
-      value = index+1
+      value = Math.max(min, index+1)
     }
 
     println(s"value is now $value")

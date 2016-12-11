@@ -11,7 +11,7 @@ import angulate2.std.{@@, NgModule}
   providers = @@[TokenService, HttpService],
   declarations = @@[WorkbenchComponent, DotComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
   //bootstrap = @@[WorkbenchComponent]
-  ,exports = @@[LoginComponent]
+  ,exports = @@[LoginComponent, DotComponent]
 )
 class ClientFrameModule {
 
