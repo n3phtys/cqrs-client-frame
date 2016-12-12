@@ -15,9 +15,11 @@ import scala.scalajs.js
     """
       |<div class="fullcontainer">
       |<label for="circlecontainer" >{{name}}:</label>
-      |<div id="circlecontainer" *ngFor="let instance of values; let i = index">
+      |<div id="circlecontainer" >
+      |<div  *ngFor="let instance of values; let i = index">
       |<div id="circle" *ngIf="instance" [style.background]="color" (click)="clickedCircle(i)">{{i+1}}</div>
       |<div id="circle" *ngIf="! instance" (click)="clickedCircle(i)">{{i+1}}</div>
+      |</div>
       |</div>
       |</div>""".stripMargin,
   styles = @@@(    """
@@ -32,7 +34,9 @@ import scala.scalajs.js
       |}
       |
       |#circlecontainer {
-      |display: inline-block;
+      |display: flex;
+      |
+      |width 150px;
       |border: 1px solid black;
       |}
       |#circle {
@@ -42,7 +46,7 @@ import scala.scalajs.js
       |color:white;
       |text-align:center;
       | border-style: 2px solid black;
-      |margin: 5px 10px 5px 10px;
+      |margin: 5px 5px 5px 5px;
       |	border-radius: 50%;
       |	width: 25px;
       |	height: 25px;
