@@ -16,7 +16,7 @@ template =
   |<form class="form-inline"  >
   |  <div class="form-group" *ngFor="let header of headers; let i = index" >
   |    <label for="header">{{header}}</label>
-  |    <input type="text" class="form-control" [name]="header" id="header" [ngModel]="values[i]" (keypress)="onTextChange(i)"/>
+  |    <input type="text" class="form-control" [name]="header" id="header" [(ngModel)]="values[i]" (keyup)="onTextChange(i)"/>
   |  </div>
   |</form>
   |
@@ -36,21 +36,26 @@ class StringMapComponent {
   @Input
   var input : Map[String, String] = Map("key A" -> "value a", "key B" -> "value b")
 
+  var cached : Map[String, String] = input
+
   var headers: Array[String] = input.keys.toJSArray
   var values: Array[String] = headers.map(h => input(h))
 
 
   def onTextChange(index : Int) : Unit = {
-    println(s"onTextChange index = $index")
-      if (!input(headers(index)).equals(values(index))) {
+    /*println("testing:")
+    println(cached(headers(index)))
+    println(values(index))*/
+      if (cached(headers(index)) != values(index)) {
         mapChanged(headers.zip(values).toMap[String, String])
       } else {
-        println(s"nothing changed at index $index")
+        println(s"nothing changed at index $index (why was this event even triggered???)")
       }
   }
 
 
     def mapChanged(map : Map[String, String]) : Unit = {
+      cached = map
       println(s"Map Changed to $map")
       //TODO: use output
     }
