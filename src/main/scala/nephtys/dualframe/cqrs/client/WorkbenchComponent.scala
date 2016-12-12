@@ -10,7 +10,8 @@ import angulate2.std.Component
   template =
     """<div class="container"><h1>Workbench Angulate2</h1>
       |<login-area></login-area>
-      |<dot-control></dot-control></div>
+      |<string-map></string-map>
+      |</div>
       |
     """.stripMargin
 )

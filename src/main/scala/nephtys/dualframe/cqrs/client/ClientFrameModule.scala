@@ -1,5 +1,6 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.forms.FormsModule
 import angulate2.platformBrowser.BrowserModule
 import angulate2.std.{@@, NgModule}
 
@@ -7,11 +8,11 @@ import angulate2.std.{@@, NgModule}
   * Created by nephtys on 12/6/16.
   */
 @NgModule(
-  imports = @@[BrowserModule],
+  imports = @@[BrowserModule, FormsModule],
   providers = @@[TokenService, HttpService],
-  declarations = @@[WorkbenchComponent, DotComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
+  declarations = @@[WorkbenchComponent, DotComponent, StringMapComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
   //bootstrap = @@[WorkbenchComponent]
-  ,exports = @@[LoginComponent, DotComponent]
+  ,exports = @@[LoginComponent, DotComponent, StringMapComponent]
 )
 class ClientFrameModule {
 
