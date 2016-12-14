@@ -10,9 +10,9 @@ import angulate2.std.{@@, NgModule}
 @NgModule(
   imports = @@[BrowserModule, FormsModule],
   providers = @@[TokenService, HttpService],
-  declarations = @@[WorkbenchComponent, DotComponent, StringMapComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
+  declarations = @@[WorkbenchComponent, ControlComponent, DotComponent, StringMapComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
   //bootstrap = @@[WorkbenchComponent]
-  ,exports = @@[LoginComponent, DotComponent, StringMapComponent]
+  ,exports = @@[LoginComponent, DotComponent, StringMapComponent, ControlComponent]
 )
 class ClientFrameModule {
 

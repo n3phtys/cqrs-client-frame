@@ -9,6 +9,8 @@ import angulate2.std.Component
   selector = "my-workbench",
   template =
     """<div class="container"><h1>Workbench Angulate2</h1>
+      |<meta-control-component></meta-control-component>
+      |
       |<login-area></login-area>
       |<dot-control></dot-control>
       |
