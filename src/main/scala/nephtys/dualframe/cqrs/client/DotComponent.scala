@@ -30,7 +30,7 @@ import scala.scalajs.js
       |}
       |
       |.fullcontainer {
-      |
+      | white-space: nowrap;
       |}
       |
       |#circlecontainer {
