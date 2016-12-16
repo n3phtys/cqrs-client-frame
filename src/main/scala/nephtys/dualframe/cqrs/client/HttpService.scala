@@ -24,7 +24,7 @@ class HttpService(tokenService: TokenService) {
   private val ETAG = "ETag"
 
   type EndpointRoot = String
-  def post(url : String, json : String, endpointRoot : Option[EndpointRoot] = None) : Future[HttpResult] = Ajax.post(endpointRoot.map(_ +"/").getOrElse("") + url, json, timeout = timeoutMs).map(result => {
+  def post(url : String, json : String, endpointRoot : Option[EndpointRoot]) : Future[HttpResult] = Ajax.post(endpointRoot.map(_ +"/").getOrElse("") + url, json, timeout = timeoutMs).map(result => {
     val r : HttpResults.ResultCode = HttpResults.fromStatusCode(result.status)
     var e : Option[ETag] = None
     r match {
