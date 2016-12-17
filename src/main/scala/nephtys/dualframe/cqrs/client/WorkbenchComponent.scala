@@ -9,6 +9,8 @@ import angulate2.std.Component
   selector = "my-workbench",
   template =
     """<div class="container"><h1>Workbench Angulate2</h1>
+      |
+      |
       |<dotted-string-list></dotted-string-list>
       |<string-list></string-list>
       |<meta-control-component></meta-control-component>
@@ -17,6 +19,8 @@ import angulate2.std.Component
       |<dot-control></dot-control>
       |
       |<string-map></string-map>
+      |
+      |<remark-component></remark-component>
       |</div>
       |
     """.stripMargin
