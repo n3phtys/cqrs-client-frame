@@ -16,7 +16,7 @@ import angulate2.std.Component
       |<meta-control-component></meta-control-component>
       |
       |<login-area></login-area>
-      |<dot-control></dot-control>
+      |<dot-control (valueSelected)="printInt($event)"></dot-control>
       |
       |<string-map></string-map>
       |
@@ -28,4 +28,9 @@ import angulate2.std.Component
 class WorkbenchComponent {
 
   //TODO: tab like pre choice for different protocols
+
+
+  def printInt(i : Int) : Unit = {
+    println(s"EventEmitter: Dot Control changed to $i")
+  }
 }

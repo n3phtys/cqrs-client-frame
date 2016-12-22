@@ -1,5 +1,6 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.core.EventEmitter
 import angulate2.std._
 
 import scala.scalajs.js
@@ -91,14 +92,14 @@ class DotComponent{
       values(index) = true
       value = Math.max(min, index+1)
     }
-
+    valueSelected.emit(value)
     println(s"value is now $value")
   }
 
 
-  /*
+
   @Output
   val valueSelected = new EventEmitter[Int]()
-*/
+
 
 }
