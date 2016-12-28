@@ -1,6 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
 import angulate2.core.EventEmitter
+import angulate2.core.OnChanges.SimpleChanges
 import angulate2.std._
 
 import scala.scalajs.js
@@ -54,7 +55,7 @@ import scala.scalajs.js
       |}
     """.stripMargin)
 )
-class DotComponent{
+class DotComponent extends OnChanges{
 
   @Input
   var name : String = "Value"
@@ -101,5 +102,9 @@ class DotComponent{
   @Output
   val valueSelected = new EventEmitter[Int]()
 
-
+  override def ngOnChanges(changes: SimpleChanges): Unit = {
+    (1 to max).map(i => {
+      if (i > value) false else true
+    }).toJSArray
+  }
 }

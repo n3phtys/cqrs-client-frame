@@ -1,5 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.core.OnChanges.SimpleChanges
+import angulate2.core.OnChangesJS
 import angulate2.std._
 
 import scala.scalajs.js
@@ -68,7 +70,7 @@ styles = @@@(
 """.stripMargin)
 
 )
-class RemarkComponent {
+class RemarkComponent extends OnChangesJS{
 
   @Input
   var remarksHighPrio : Seq[String] = Seq("You have to do A", "You have to do B before closing chargen")
@@ -95,5 +97,6 @@ class RemarkComponent {
     lowPrio = remarksLowPrio.toJSArray
   }
 
-  inputChanged()
+
+  override def ngOnChanges(changes: SimpleChanges): Unit = inputChanged()
 }
