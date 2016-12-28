@@ -18,7 +18,7 @@ import angulate2.std.Component
       |<login-area></login-area>
       |<dot-control (valueSelected)="printInt($event)"></dot-control>
       |
-      |<string-map></string-map>
+      |<string-map (mapChange)="printKeyMap($event)"></string-map>
       |
       |<remark-component></remark-component>
       |</div>
@@ -32,5 +32,9 @@ class WorkbenchComponent {
 
   def printInt(i : Int) : Unit = {
     println(s"EventEmitter: Dot Control changed to $i")
+  }
+
+  def printKeyMap(map : Map[String, String]) : Unit = {
+    println(s"EventEmitter: stringmap changed to $map")
   }
 }

@@ -1,7 +1,10 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.core.{EventEmitter, OnChangesJS}
+import angulate2.core.OnChanges.SimpleChanges
 import angulate2.std._
 
+import scala.scalajs.js
 import scala.scalajs.js.Array
 import scala.scalajs.js.JSConverters._
 
@@ -29,9 +32,11 @@ template =
       |}
     """.stripMargin)
 )
-class StringMapComponent {
+class StringMapComponent extends OnChangesJS {
 
-  var static = "This is a static value" //[ngModel]="static"
+
+  @Output
+  val mapChange = new EventEmitter[Map[String, String]]()
 
   @Input
   var input : Map[String, String] = Map("key A" -> "value a", "key B" -> "value b")
@@ -43,9 +48,6 @@ class StringMapComponent {
 
 
   def onTextChange(index : Int) : Unit = {
-    /*println("testing:")
-    println(cached(headers(index)))
-    println(values(index))*/
       if (cached(headers(index)) != values(index)) {
         mapChanged(headers.zip(values).toMap[String, String])
       } else {
@@ -57,8 +59,12 @@ class StringMapComponent {
     def mapChanged(map : Map[String, String]) : Unit = {
       cached = map
       println(s"Map Changed to $map")
-      //TODO: use output
+      mapChange.emit(map)
     }
 
-
+  override def ngOnChanges(changes: SimpleChanges): Unit = {
+    cached = input
+    headers = input.keys.toJSArray
+    values = headers.map(h => input(h))
+  }
 }
