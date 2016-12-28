@@ -8,8 +8,17 @@ import angulate2.std._
 @Injectable
 class LocalStorageService {
 
-  def get(key : String) : Option[String] = ???
-  def remove(key : String) : Unit = ???
-  def set(key : String, value : String) : Unit = ???
+  private def localStorage = org.scalajs.dom.window.localStorage
+
+  def get(key : String) : Option[String] = {
+    val s : String = localStorage.getItem(key)
+    if (s != null && s.nonEmpty) {
+      Some(s)
+    } else {
+      None
+    }
+  }
+  def remove(key : String) : Unit = localStorage.removeItem(key)
+  def set(key : String, value : String) : Unit = localStorage.setItem(key, value)
 
 }
