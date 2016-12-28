@@ -10,8 +10,8 @@ import angulate2.std.Component
   template =
     """<div class="container"><h1>Workbench Angulate2</h1>
       |
+      |<dotted-string-list (seqChange)="printDotChange($event)" title="Dotted StringPair"></dotted-string-list>
       |
-      |<dotted-string-list></dotted-string-list>
       |<string-list (seqChange)="printChange($event)"></string-list>
       |<meta-control-component></meta-control-component>
       |
@@ -19,6 +19,7 @@ import angulate2.std.Component
       |<dot-control (valueSelected)="printInt($event)"></dot-control>
       |
       |<string-map (mapChange)="printKeyMap($event)"></string-map>
+      |
       |
       |<remark-component></remark-component>
       |</div>
@@ -36,6 +37,10 @@ class WorkbenchComponent {
 
   def printChange(i : Seq[String]) : Unit = {
     println(s"EventEmitter: String List changed to $i")
+  }
+
+  def printDotChange(i : Seq[DottedStringPair]) : Unit = {
+    println(s"EventEmitter: Dotted List changed to $i")
   }
 
   def printKeyMap(map : Map[String, String]) : Unit = {

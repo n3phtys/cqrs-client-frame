@@ -1,5 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.core.OnChanges.SimpleChanges
+import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.std._
 
 import scala.scalajs.js
@@ -31,7 +33,7 @@ import scala.scalajs.js
       |      ><span class="glyphicon glyphicon-remove-sign"></span></button>
       |      {{entry.category}}:
       |
-      |<dot-control [name]="entry.title" [value]="entry.rating" ></dot-control>
+      |<dot-control [name]="entry.title" [value]="entry.rating" (valueSelected)="changeRating(i, $event)" ></dot-control>
       |
       | </div>
       |</div>
@@ -55,7 +57,7 @@ import scala.scalajs.js
       |}
     """.stripMargin)
 )
-class DottedStringPairComponent {
+class DottedStringPairComponent extends OnChangesJS{
 
   //does not enable edit, just add, remove, and dot changes
 
@@ -95,12 +97,15 @@ class DottedStringPairComponent {
 
   inputChanged()
 
-  def outputEvent(newContent : IndexedSeq[DottedStringPairComponent]) : Unit = {
-    ???
+  def outputEvent(newContent : IndexedSeq[DottedStringPair]) : Unit = {
+    seqChange.emit(newContent)
   }
 
   def changeRating(index : Int, newRating : Int) : Unit = {
-      ???
+    println(s"rating of index $index changed to value $newRating")
+    val old = internalValues(index)
+    internalValues(index) = DottedStringPair(title = old.title, category = old.category, rating = newRating)
+    outputEvent(internalValues.toIndexedSeq)
   }
 
   def add() : Unit  = {
@@ -110,6 +115,7 @@ class DottedStringPairComponent {
     if (writtenValue.nonEmpty ) {
       internalValues.push(DottedStringPair(selectedValue, writtenValue, 0))
       writtenValue = ""
+      outputEvent(internalValues.toIndexedSeq)
     }
   }
 
@@ -117,7 +123,12 @@ class DottedStringPairComponent {
     if (org.scalajs.dom.window.confirm("Do you really want to remove this item?")) {
       val r = internalValues.splice(index, 1)
       println(s"removed element $r")
+      outputEvent(internalValues.toIndexedSeq)
     }
   }
 
+  @Output
+  val seqChange = new EventEmitter[IndexedSeq[DottedStringPair]]()
+
+  override def ngOnChanges(changes: SimpleChanges): Unit = inputChanged()
 }
