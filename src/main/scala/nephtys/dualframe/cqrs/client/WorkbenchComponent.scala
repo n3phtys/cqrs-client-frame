@@ -12,7 +12,7 @@ import angulate2.std.Component
       |
       |
       |<dotted-string-list></dotted-string-list>
-      |<string-list></string-list>
+      |<string-list (seqChange)="printChange($event)"></string-list>
       |<meta-control-component></meta-control-component>
       |
       |<login-area></login-area>
@@ -32,6 +32,10 @@ class WorkbenchComponent {
 
   def printInt(i : Int) : Unit = {
     println(s"EventEmitter: Dot Control changed to $i")
+  }
+
+  def printChange(i : Seq[String]) : Unit = {
+    println(s"EventEmitter: String List changed to $i")
   }
 
   def printKeyMap(map : Map[String, String]) : Unit = {

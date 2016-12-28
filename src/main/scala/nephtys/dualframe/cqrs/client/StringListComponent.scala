@@ -1,5 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.core.OnChanges.SimpleChanges
+import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.std._
 
 import scala.scalajs.js
@@ -54,7 +56,7 @@ import scala.scalajs.js
       |}
     """.stripMargin)
 )
-class StringListComponent {
+class StringListComponent extends OnChangesJS{
 
   @Input
   var inputStrings : js.Array[String] = js.Array("Note A",
@@ -84,8 +86,7 @@ class StringListComponent {
     })
   }
 
-  inputChanged() //todo: call this in OnChanges method
-
+  inputChanged()
 
   def emitSeq() : Unit = {
     contentChangedEvent((0 until internalStrings.length).map(i => internalStrings(i)))
@@ -130,7 +131,13 @@ class StringListComponent {
   }
 
   def contentChangedEvent(newContent : Seq[String]) : Unit = {
-    println(s"Content changed to ${newContent}")
+    println(s"Content changed to $newContent")
+    seqChange.emit(newContent)
   }
 
+  @Output
+  val seqChange = new EventEmitter[Seq[String]]()
+
+
+  override def ngOnChanges(changes: SimpleChanges): Unit = inputChanged()
 }
