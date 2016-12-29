@@ -36,27 +36,27 @@ class StringMapComponent extends OnChangesJS {
 
 
   @Output
-  val mapChange = new EventEmitter[Map[String, String]]()
+  val mapChange = new EventEmitter[Seq[(String, String)]]()
 
   @Input
-  var input : Map[String, String] = Map("key A" -> "value a", "key B" -> "value b")
+  var input : Seq[(String, String)] = Map("key A" -> "value a", "key B" -> "value b").toSeq
 
-  var cached : Map[String, String] = input
+  var cached : Seq[(String, String)] = input
 
-  var headers: Array[String] = input.keys.toJSArray
-  var values: Array[String] = headers.map(h => input(h))
+  var headers: Array[String] = input.map(_._1).toJSArray
+  var values: Array[String] = input.map(_._2).toJSArray
 
 
   def onTextChange(index : Int) : Unit = {
-      if (cached(headers(index)) != values(index)) {
-        mapChanged(headers.zip(values).toMap[String, String])
+      if (cached.toMap[String,String].apply(headers(index)) != values(index)) {
+        mapChanged(headers.zip(values))
       } else {
         println(s"nothing changed at index $index (why was this event even triggered???)")
       }
   }
 
 
-    def mapChanged(map : Map[String, String]) : Unit = {
+    def mapChanged(map : Seq[(String, String)]) : Unit = {
       cached = map
       println(s"Map Changed to $map")
       mapChange.emit(map)
@@ -64,7 +64,7 @@ class StringMapComponent extends OnChangesJS {
 
   override def ngOnChanges(changes: SimpleChanges): Unit = {
     cached = input
-    headers = input.keys.toJSArray
-    values = headers.map(h => input(h))
+    headers = input.map(_._1).toJSArray
+    values = input.map(_._2).toJSArray
   }
 }
