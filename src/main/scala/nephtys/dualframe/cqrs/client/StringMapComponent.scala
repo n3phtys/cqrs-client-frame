@@ -15,7 +15,6 @@ import scala.scalajs.js.JSConverters._
 selector = "string-map",
 template =
 """ <div>
-  |StringMap component:
   |<form class="form-inline"  >
   |  <div class="form-group" *ngFor="let header of headers; let i = index" >
   |    <label for="header">{{header}}</label>
