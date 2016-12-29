@@ -17,6 +17,7 @@ template =
   """
     |<div>
     |<div class="container" *ngIf="nonEmptyCount > 0 && visible">
+    |<h4 *ngIf="title">{{title}}</h4>
     |<ul>
     |<li class="highprio" *ngFor="let s of highPrio">{{s}}</li>
     |</ul>
@@ -71,6 +72,9 @@ styles = @@@(
 
 )
 class RemarkComponent extends OnChangesJS{
+
+  @Input
+  var title : String = _
 
   @Input
   var remarksHighPrio : Seq[String] = Seq("You have to do A", "You have to do B before closing chargen")
