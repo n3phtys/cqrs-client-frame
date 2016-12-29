@@ -5,6 +5,8 @@ import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.std._
 
 import scala.scalajs.js
+import scala.scalajs.js.Array
+import scala.scalajs.js.JSConverters._
 
 /**
   * Created by nephtys on 12/14/16.
@@ -13,7 +15,7 @@ import scala.scalajs.js
   selector = "string-list",
   template =
     """
-      |<h3>String List Component</h3>
+      |<h3>{{title}}</h3>
       |
       | <form class="form-inline">
       |  <div class="form-group">
@@ -59,6 +61,12 @@ import scala.scalajs.js
 class StringListComponent extends OnChangesJS{
 
   @Input
+  var title = "String List Component"
+
+  @Input
+  var input : Seq[String] = Seq.empty
+
+
   var inputStrings : js.Array[String] = js.Array("Note A",
     "entry with long text and really much to write about that not really says anything useful, so why am I even typing this, this is stupid, so stupid, why am i typing this",
     "Note B", "@2153 €?!", "xxx", "avbc", "Note sfasf")
@@ -73,6 +81,8 @@ class StringListComponent extends OnChangesJS{
 
 
   def inputChanged() : Unit = {
+    inputStrings = input.toJSArray
+
     println("Input changed")
 
     newStringField = ""
