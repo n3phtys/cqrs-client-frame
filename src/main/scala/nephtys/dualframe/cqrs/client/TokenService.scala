@@ -19,6 +19,7 @@ import scala.concurrent.duration.FiniteDuration
 class TokenService {
   def currentTokenWithBearer = tokenWithBearer
 
+  var manualSetEmail : Option[String] = None
 
   private val localStorageTokenKey = """GOOGLE_IDENTITY_TOKEN"""
   private val repeatScanInterval : FiniteDuration = FiniteDuration(2, TimeUnit.MINUTES)
