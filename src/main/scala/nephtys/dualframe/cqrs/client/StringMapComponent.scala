@@ -1,9 +1,14 @@
 package nephtys.dualframe.cqrs.client
 
+import java.util.concurrent.TimeUnit
+
 import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.core.OnChanges.SimpleChanges
 import angulate2.std._
+import rxscalajs.subjects.BehaviorSubject
+import rxscalajs.subscription.Subscription
 
+import scala.concurrent.duration.FiniteDuration
 import scala.scalajs.js
 import scala.scalajs.js.Array
 import scala.scalajs.js.JSConverters._
@@ -46,11 +51,15 @@ class StringMapComponent extends OnChangesJS {
   var values: Array[String] = input.map(_._2).toJSArray
 
 
+  val debouncer: BehaviorSubject[Seq[(String, String)]] = BehaviorSubject[Seq[(String, String)]](Seq.empty)
+
+  val debounced: Subscription = debouncer.debounceTime(FiniteDuration(100, TimeUnit.MILLISECONDS)).filter(_.nonEmpty).subscribe(s => mapChange.emit(s))
+
   def onTextChange(index : Int) : Unit = {
       if (cached.toMap[String,String].apply(headers(index)) != values(index)) {
         mapChanged(headers.zip(values))
       } else {
-        println(s"nothing changed at index $index (why was this event even triggered???)")
+        //println(s"nothing changed at index $index (why was this event even triggered???)")
       }
   }
 
@@ -58,11 +67,12 @@ class StringMapComponent extends OnChangesJS {
     def mapChanged(map : Seq[(String, String)]) : Unit = {
       cached = map
       println(s"Map Changed to $map")
-      mapChange.emit(map)
+      debouncer.next(map)
     }
 
   override def ngOnChanges(changes: SimpleChanges): Unit = {
     cached = input
+    debouncer.next(input)
     headers = input.map(_._1).toJSArray
     values = input.map(_._2).toJSArray
   }
