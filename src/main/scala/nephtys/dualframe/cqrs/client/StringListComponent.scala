@@ -98,24 +98,21 @@ class StringListComponent extends OnChangesJS{
 
   inputChanged()
 
-  def emitSeq() : Unit = {
-    contentChangedEvent((0 until internalStrings.length).map(i => internalStrings(i)))
-  }
-
   def editBtnClicked(index : Int) : Unit = {
     internalEditStates(index) = true
   }
 
   def editOkayBtnClicked(index : Int) : Unit = {
     internalEditStates(index) = false
-    internalStrings(index) = internalEditStrings(index)
-    emitSeq()
+    if (internalStrings(index) != internalEditStrings(index)) {
+      internalStrings(index) = internalEditStrings(index)
+      contentChange(StringListEdit(index, internalStrings(index)))
+    }
   }
 
   def editRevertBtnClicked(index : Int) : Unit = {
     internalEditStates(index) = false
     internalEditStrings(index) = internalStrings(index)
-    emitSeq()
   }
 
 
@@ -123,11 +120,12 @@ class StringListComponent extends OnChangesJS{
   def addBtnClicked() : Unit = {
     println("add button clicked")
     if(newStringField != null && newStringField.length > 2) {
-      internalEditStates.push(false)
-      internalStrings.push(newStringField)
-      internalEditStrings.push(newStringField)
+      val s = newStringField
       newStringField = ""
-      emitSeq()
+      internalEditStates.push(false)
+      internalStrings.push(s)
+      internalEditStrings.push(s)
+      contentChange(StringListAdd(s))
     }
   }
 
@@ -136,17 +134,16 @@ class StringListComponent extends OnChangesJS{
     internalEditStates.remove(index)
     internalStrings.remove(index)
     internalEditStrings.remove(index)
-    emitSeq()
-
+    contentChange(StringListDelete(index))
   }
 
-  def contentChangedEvent(newContent : Seq[String]) : Unit = {
-    println(s"Content changed to $newContent")
-    seqChange.emit(newContent)
+  def contentChange(change : StringListDif) : Unit = {
+    println(s"Content changed to $change")
+    seqChange.emit(change)
   }
 
   @Output
-  val seqChange = new EventEmitter[Seq[String]]()
+  val seqChange = new EventEmitter[StringListDif]()
 
 
   override def ngOnChanges(changes: SimpleChanges): Unit = inputChanged()

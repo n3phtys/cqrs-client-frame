@@ -1,5 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
+import angulate2.core.OnChanges.SimpleChanges
+import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.std._
 import org.nephtys.loom.generic.protocol.InternalStructures.{Email, Owned}
 
@@ -58,7 +60,7 @@ import scala.scalajs.js
       |</div>
     """.stripMargin
 )
-class ControlComponent {
+class ControlComponent extends OnChangesJS{
 
   @Input
   var input : Owned = _
@@ -102,7 +104,7 @@ class ControlComponent {
   def deleteBtnClicked() : Unit = {
     if (confirm("Do you really want to permanently and irreversible delete this entire aggregate?")) {
       println("Deleting instance!")
-      deleteEvent()
+      deleteEventTriggered()
     }
   }
 
@@ -146,25 +148,41 @@ class ControlComponent {
     setPublicStrings()
   }
 
-  inputChanged() //TODO: call in OnChanges after OnChanges is implemented by angulate2
+  inputChanged()
 
-  def deleteEvent() : Unit = {
+
+
+  def deleteEventTriggered() : Unit = {
     println("Triggering deletion event")
-    //todo: ???
+    deleteEvent.emit(true)
   }
 
   def publicStateEvent(public : Boolean) : Unit = {
     println(s"public-state changed to $public")
-    //todo: ???
+    publicStateChanged.emit(public)
   }
 
   def readersChangedEvent(set : Set[Email]) : Unit = {
     println(s"readers changed to $set")
-    //todo: ???
+    readersChanged.emit(set)
   }
 
   def ownerChangedEvent(newOwner : Email) : Unit = {
     println(s"owner changed to $newOwner")
-    //todo: ???
+    ownerChanged.emit(newOwner)
   }
+
+  @Output
+  val ownerChanged = new EventEmitter[Email]()
+
+  @Output
+  val deleteEvent = new EventEmitter[Boolean]()
+
+  @Output
+  val readersChanged = new EventEmitter[Set[Email]]()
+
+  @Output
+  val publicStateChanged = new EventEmitter[Boolean]()
+
+  override def ngOnChanges(changes: SimpleChanges): Unit = inputChanged()
 }
