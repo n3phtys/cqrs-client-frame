@@ -112,7 +112,9 @@ class ControlComponent extends OnChangesJS{
     if (isEmail(ownerStr)) {
       println("valid email!")
       owner = ownerStr
-      ownerChangedEvent(Email(ownerStr))
+      if(org.scalajs.dom.window.confirm(s"Are you really sure you want to move ownership and control over this character to $ownerStr ? If the address is not correct this character will be permanently corrupted")) {
+        ownerChangedEvent(Email(ownerStr))
+      }
     } else {
       alert("The value you inputed was not a valid email!")
       ownerStr = owner
