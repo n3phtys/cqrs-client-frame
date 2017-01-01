@@ -3,6 +3,7 @@ package nephtys.dualframe.cqrs.client
 import angulate2.core.OnChanges.SimpleChanges
 import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.std._
+import nephtys.dualframe.cqrs.client.DottedStringPairChange.DottedStringPairChange
 
 import scala.scalajs.js
 
@@ -72,7 +73,7 @@ class DottedStringPairComponent extends OnChangesJS{
   //var allowOwnCategories : Boolean = false
 
   @Input
-  var input : js.Array[DottedStringPair] = js.Array(
+  var input : IndexedSeq[DottedStringPair] = IndexedSeq(
     DottedStringPair("Cat A", "Text A", 3),
     DottedStringPair("Cat B", "Text B", 4)
   )
@@ -97,7 +98,7 @@ class DottedStringPairComponent extends OnChangesJS{
 
   inputChanged()
 
-  def outputEvent(newContent : IndexedSeq[DottedStringPair]) : Unit = {
+  def outputEvent(newContent : DottedStringPairChange) : Unit = {
     seqChange.emit(newContent)
   }
 
@@ -105,7 +106,7 @@ class DottedStringPairComponent extends OnChangesJS{
     println(s"rating of index $index changed to value $newRating")
     val old = internalValues(index)
     internalValues(index) = DottedStringPair(title = old.title, category = old.category, rating = newRating)
-    outputEvent(internalValues.toIndexedSeq)
+    outputEvent(DottedStringPairChange.Edit(index, internalValues(index)))
   }
 
   def add() : Unit  = {
@@ -115,7 +116,7 @@ class DottedStringPairComponent extends OnChangesJS{
     if (writtenValue.nonEmpty ) {
       internalValues.push(DottedStringPair(selectedValue, writtenValue, 0))
       writtenValue = ""
-      outputEvent(internalValues.toIndexedSeq)
+      outputEvent(DottedStringPairChange.Insert(internalValues.last))
     }
   }
 
@@ -123,12 +124,12 @@ class DottedStringPairComponent extends OnChangesJS{
     if (org.scalajs.dom.window.confirm("Do you really want to remove this item?")) {
       val r = internalValues.splice(index, 1)
       println(s"removed element $r")
-      outputEvent(internalValues.toIndexedSeq)
+      outputEvent(DottedStringPairChange.Remove(index))
     }
   }
 
   @Output
-  val seqChange = new EventEmitter[IndexedSeq[DottedStringPair]]()
+  val seqChange = new EventEmitter[DottedStringPairChange]()
 
   override def ngOnChanges(changes: SimpleChanges): Unit = inputChanged()
 }
