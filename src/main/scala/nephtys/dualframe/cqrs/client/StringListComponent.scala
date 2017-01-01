@@ -3,6 +3,7 @@ package nephtys.dualframe.cqrs.client
 import angulate2.core.OnChanges.SimpleChanges
 import angulate2.core.{EventEmitter, OnChangesJS}
 import angulate2.std._
+import nephtys.dualframe.cqrs.client.StringListDif.{StringListAdd, StringListDelete, StringListDif, StringListEdit}
 
 import scala.scalajs.js
 import scala.scalajs.js.Array
