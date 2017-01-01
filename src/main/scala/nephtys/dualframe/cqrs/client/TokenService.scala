@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit
 import angulate2.std.Injectable
 import nephtys.dualframe.cqrs.client.oidchelper.OIDC
 import nephtys.dualframe.cqrs.client.oidchelper.OIDC.IdentityToken
+import org.nephtys.loom.generic.protocol.InternalStructures.Email
 import rxscalajs.Observable
 import rxscalajs.subjects.BehaviorSubject
 
@@ -17,7 +18,7 @@ import scala.concurrent.duration.FiniteDuration
   */
 @Injectable
 class TokenService {
-  def currentTokenWithBearer = tokenWithBearer
+  def currentTokenWithBearer: String = tokenWithBearer
 
   var manualSetEmail : Option[String] = None
 
@@ -61,6 +62,23 @@ class TokenService {
   val currentEmail : Observable[String] = currentIdentityToken.map(i => i.map(_.email).getOrElse(">no email set<"))
 
   val currentTokenWithBearerInFront: Observable[String] = currentToken.map(s => "Bearer " + s)
+
+  private var internalEmailStorage : Option[Email] = None
+  currentEmail.subscribe(s => if(s.nonEmpty) {
+    internalEmailStorage = Some(Email(s))
+  })
+  def getCurrentEmail : Email = {
+    internalEmailStorage.getOrElse({
+      if (manualSetEmail.isDefined) {
+        Email(manualSetEmail.get)
+      } else {
+        val s = org.scalajs.dom.window.prompt("You do not have an OpenID Connect Token stored. Please manually enter your email address to let us determine which characters are yours.")
+        manualSetEmail = Some(s)
+        Email(s)
+      }
+    })
+  }
+
 
   private var tokenWithBearer : String = ""
   currentTokenWithBearerInFront.subscribe(s => tokenWithBearer = s)
