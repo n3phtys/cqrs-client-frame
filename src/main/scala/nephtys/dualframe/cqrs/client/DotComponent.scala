@@ -83,15 +83,15 @@ class DotComponent extends OnChangesJS {
   def clickedCircle(index : Int) : Unit = {
     println(s"clicked circle index = $index")
     if (index + 1 >= min && index < max && (value != index +1 || value > min)) {
-      (0 until index).foreach(i => values(i) = true)
-      (index + 1 until values.length).foreach(i => values(i) = false)
+      //(0 until index).foreach(i => values(i) = true)
+      //(index + 1 until values.length).foreach(i => values(i) = false)
       if (value == index + 1 && index+1 > min) {
         //unset
-        values(index) = false
+        //values(index) = false
         value = Math.max(min, index)
       } else {
         //set
-        values(index) = true
+        //values(index) = true
         value = Math.max(min, index + 1)
       }
       valueSelected.emit(value)
