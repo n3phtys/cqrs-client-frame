@@ -1,6 +1,6 @@
 package nephtys.dualframe.cqrs.client
 
-import angulate2.core.{EventEmitter, OnChangesJS}
+import angulate2.core.{EventEmitter}
 import angulate2.core.OnChanges.SimpleChanges
 import angulate2.std._
 
@@ -55,7 +55,7 @@ import scala.scalajs.js
       |}
     """.stripMargin)
 )
-class DotComponent extends OnChangesJS {
+class DotComponent extends OnChanges {
 
   @Input
   var name : String = "Value"

@@ -1,7 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
 import angulate2.core.OnChanges.SimpleChanges
-import angulate2.core.{EventEmitter, OnChangesJS}
+import angulate2.core.{EventEmitter}
 import angulate2.std._
 import nephtys.dualframe.cqrs.client.DottedStringPairChange.DottedStringPairChange
 
@@ -58,7 +58,7 @@ import scala.scalajs.js
       |}
     """.stripMargin)
 )
-class DottedStringPairComponent extends OnChangesJS{
+class DottedStringPairComponent extends OnChanges{
 
   //does not enable edit, just add, remove, and dot changes
 

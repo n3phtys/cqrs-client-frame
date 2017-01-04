@@ -1,7 +1,6 @@
 package nephtys.dualframe.cqrs.client
 
 import angulate2.core.OnChanges.SimpleChanges
-import angulate2.core.OnChangesJS
 import angulate2.std._
 
 import scala.scalajs.js
@@ -71,7 +70,7 @@ styles = @@@(
 """.stripMargin)
 
 )
-class RemarkComponent extends OnChangesJS{
+class RemarkComponent extends OnChanges{
 
   @Input
   var title : String = _

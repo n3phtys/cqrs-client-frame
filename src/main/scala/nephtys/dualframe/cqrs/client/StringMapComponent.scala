@@ -2,7 +2,7 @@ package nephtys.dualframe.cqrs.client
 
 import java.util.concurrent.TimeUnit
 
-import angulate2.core.{EventEmitter, OnChangesJS}
+import angulate2.core.{EventEmitter}
 import angulate2.core.OnChanges.SimpleChanges
 import angulate2.std._
 import rxscalajs.subjects.BehaviorSubject
@@ -36,7 +36,7 @@ template =
       |}
     """.stripMargin)
 )
-class StringMapComponent extends OnChangesJS {
+class StringMapComponent extends OnChanges {
 
 
   @Output

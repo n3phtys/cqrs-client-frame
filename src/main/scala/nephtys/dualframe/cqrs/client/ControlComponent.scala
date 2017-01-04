@@ -1,7 +1,7 @@
 package nephtys.dualframe.cqrs.client
 
 import angulate2.core.OnChanges.SimpleChanges
-import angulate2.core.{EventEmitter, OnChangesJS}
+import angulate2.core.{EventEmitter}
 import angulate2.std._
 import org.nephtys.loom.generic.protocol.InternalStructures.{Email, Owned}
 
@@ -60,7 +60,7 @@ import scala.scalajs.js
       |</div>
     """.stripMargin
 )
-class ControlComponent extends OnChangesJS{
+class ControlComponent extends OnChanges{
 
   @Input
   var input : Owned = _

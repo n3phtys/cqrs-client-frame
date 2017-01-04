@@ -26,7 +26,7 @@ lazy val root = Project("cqrs-client-frame", file("."))
   .settings(
     libraryDependencies ++= Seq(
       "com.github.lukajcb" %%% "rxscala-js" % "0.9.2",
-      "com.lihaoyi" %%% "upickle" % "0.4.3",
+      "com.lihaoyi" %%% "upickle" % "0.4.4",
       "com.github.marklister" %%% "base64" % "0.2.3"
     ),
     ngBootstrap := Some("nephtys.dualframe.cqrs.client.AppModule"),
