@@ -10,6 +10,19 @@ import angulate2.std.Component
   template =
     """<div class="container"><h1>Workbench Angulate2</h1>
       |
+      |
+      |<my-tabs (selected)="log($event.selectedTab)">
+      |  <my-tab [tabTitle]="'Title 1'">
+      |    Content 1
+      |  </my-tab>
+      |  <my-tab tabTitle="Title 2">
+      |    Content 2
+      |  </my-tab>
+      |  <my-tab [tabTitle]="'Title 3'">
+      |    Content 3
+      |  </my-tab>
+      |</my-tabs>
+      |
       |<dotted-string-list (seqChange)="printDotChange($event)" title="Dotted StringPair"></dotted-string-list>
       |
       |<string-list (seqChange)="printChange($event)"></string-list>
