@@ -10,13 +10,15 @@ import scala.scalajs.js.annotation.JSExport
 @Component(
   selector = "tab-control",
   template =
-    """ <div [hidden]="!selected">
+    """ <div [hidden]="!active" class="pane">
       |  <ng-content></ng-content>
       |</div>
     """.stripMargin,
   styles = @@@(
     """
-      |
+      |.pane{
+      |      padding: 1em;
+      |    }
     """.stripMargin)
 )
 class TabComponent(tabsComponent: TabsComponent) extends OnInit {
@@ -25,7 +27,7 @@ class TabComponent(tabsComponent: TabsComponent) extends OnInit {
   var title : String = "title"
 
   @Input
-  var selected : Boolean = true
+  var active : Boolean = true
 
   override def ngOnInit(): Unit = {
     this.tabsComponent.addTab(this)
