@@ -22,6 +22,7 @@ class TokenService {
 
   var manualSetEmail : Option[String] = None
 
+  private val localStorageManualEmailKey = """MANUALLY_ENTERED_EMAIL"""
   private val localStorageTokenKey = """GOOGLE_IDENTITY_TOKEN"""
   private val repeatScanInterval : FiniteDuration = FiniteDuration(2, TimeUnit.MINUTES)
 
@@ -30,9 +31,20 @@ class TokenService {
   timer.subscribe(i => {
     println(s"tokenservice timer ticked $i")
     _innerCurrentToken.next(scanLocalStorage)
+
+    manualSetEmail.foreach(s => if(isEmail(s)) {
+      org.scalajs.dom.window.localStorage.setItem(localStorageManualEmailKey, s)
+    })
   })
 
+  def isEmail(str : String) : Boolean = {
+    """(?=[^\s]+)(?=(\w+)@([\w\.]+))""".r.findFirstIn(str).isDefined
+  }
+
   private def scanLocalStorage : String = {
+
+    manualSetEmail = Some(org.scalajs.dom.window.localStorage.getItem(localStorageManualEmailKey)).filter(a => a != null && a.nonEmpty && a.contains('@'))
+
     val extr = org.scalajs.dom.window.localStorage.getItem(localStorageTokenKey)
     if (extr != null) {
       extr
