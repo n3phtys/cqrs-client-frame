@@ -19,8 +19,9 @@ import scala.scalajs.js
   template =
     """
       | <div>
-      | <h3>Access Settings</h3>
-      |
+      | <div *ngIf="useTitle">
+      | <h3 >Access Settings</h3>
+      |</div>
       | <button (click)="togglePublicBtn()" class="btn btn-warning">Currently {{publicStr}}, set to {{otherPublicStr}}</button>
       |
       |
@@ -64,6 +65,9 @@ class ControlComponent extends OnChanges{
 
   @Input
   var input : Owned = _
+
+  @Input
+  var useTitle : Boolean = true
 
   var readers : js.Array[String] = js.Array("somedude@company.com", "other@home.org")
   var owner : String = "bob@home.com"

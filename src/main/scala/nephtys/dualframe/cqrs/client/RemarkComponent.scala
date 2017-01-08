@@ -15,7 +15,14 @@ selector = "remark-component",
 template =
   """
     |<div>
-    |<div class="container" *ngIf="nonEmptyCount > 0 && visible">
+    |
+    |
+    |<div class="buttonDiv">
+    |<button (click)="btnClick()" type="button" class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span></button>
+    |</div>
+    |
+    |
+    |<div class="containerdiv" *ngIf="nonEmptyCount > 0 && visible">
     |<h4 *ngIf="title">{{title}}</h4>
     |<ul>
     |<li class="highprio" *ngFor="let s of highPrio">{{s}}</li>
@@ -28,14 +35,11 @@ template =
     |</div>
     |
     |
-    |<div class="buttonDiv">
-    |<button (click)="btnClick()" type="button" class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span></button>
-    |</div>
     |</div>
     | """.stripMargin,
 styles = @@@(
 """
-  |.container {
+  |.containerdiv {
   |    border: 2px solid red;
   |    border-radius: 10px;
   |}
@@ -43,19 +47,19 @@ styles = @@@(
   | margin: 0 auto;
   |}
   |@media only screen and (min-width: 768px) {
-  |.container {
+  |.containerdiv {
   |   border: 3px solid blue;
   |    border-radius: 15px;
-  |   width: 10vw;
-  |   position: fixed;
-  |   right: 1px;
-  |   top: 20%;
+  |    margin: 5px;
+  |    padding: 5px;
+  |    position: fixed;
+  |right: 0;
+  |top: 10%;
+  |   width: 13%;
+  |    overflow: auto;
   |}
   |.buttonDiv {
   |display: block;
-  | position: fixed;
-  | top: 5%;
-  | right: 15px;
   |}
   |}
   |.highprio {
