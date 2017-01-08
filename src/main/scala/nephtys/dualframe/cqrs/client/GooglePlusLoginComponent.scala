@@ -8,7 +8,7 @@ import scala.scalajs.js
   * Created by Christopher on 07.01.2017.
   */
 @Component(
-  selector = "goole-plus-login",
+  selector = "google-plus-login",
   template =
     """<div class="well well-sm">
       |<div >

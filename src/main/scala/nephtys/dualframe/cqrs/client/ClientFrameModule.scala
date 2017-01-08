@@ -8,11 +8,11 @@ import angulate2.std.{@@, NgModule}
   * Created by nephtys on 12/6/16.
   */
 @NgModule(
-  imports = @@[BrowserModule, FormsModule],
-  providers = @@[TokenService, HttpService, LocalStorageService, IDBPersistenceService],
-  declarations = @@[WorkbenchComponent, TabComponent, TabsComponent, ControlComponent,  RemarkComponent, DottedStringPairComponent, StringListComponent, DotComponent, StringMapComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
+  imports = @@[BrowserModule, FormsModule, LoginModule],
+  providers = @@[HttpService, LocalStorageService, IDBPersistenceService],
+  declarations = @@[WorkbenchComponent, CollapsedWellComponent, TabComponent, TabsComponent, ControlComponent,  RemarkComponent, DottedStringPairComponent, StringListComponent, DotComponent, StringMapComponent]
   //bootstrap = @@[WorkbenchComponent]
-  ,exports = @@[LoginComponent, RemarkComponent, DottedStringPairComponent, DotComponent, StringMapComponent, StringListComponent, ControlComponent]
+  ,exports = @@[RemarkComponent, CollapsedWellComponent, DottedStringPairComponent, DotComponent, StringMapComponent, StringListComponent, ControlComponent]
 )
 class ClientFrameModule {
 
