@@ -27,7 +27,8 @@ lazy val root = Project("cqrs-client-frame", file("."))
     libraryDependencies ++= Seq(
       "com.github.lukajcb" %%% "rxscala-js" % "0.9.2",
       "com.lihaoyi" %%% "upickle" % "0.4.4",
-      "com.github.marklister" %%% "base64" % "0.2.3"
+      "com.github.marklister" %%% "base64" % "0.2.3",
+      "de.nephtys" %%% "scalajs-google-sign-in" % "0.0.1"
     ),
     ngBootstrap := Some("nephtys.dualframe.cqrs.client.AppModule"),
     scalacOptions ++= Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-target:jvm-1.8", "-unchecked",

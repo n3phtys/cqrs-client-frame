@@ -7,7 +7,7 @@ import angulate2.std.{@@, NgModule}
   * Created by nephtys on 12/8/16.
   */
 @NgModule(
-  imports = @@[BrowserModule, ClientFrameModule, LoginModule],
+  imports = @@[BrowserModule, ClientFrameModule],
   //providers = @@[TokenService, HttpService],
   //declarations = @@[WorkbenchComponent,LoginComponent, LoginControlComponent, LoginInfoComponent],
   bootstrap = @@[WorkbenchComponent]

@@ -8,40 +8,48 @@ import angulate2.std.Component
 @Component(
   selector = "my-workbench",
   template =
-    """<div class="container"><h1>Workbench Angulate2</h1>
+    """<div>
+      |<h1>Workbench Angulate2</h1>
       |
-      |
-      |<tab-pane >
-      |  <tab-control [title]="'Title 1'">
-      |    Content 1
-      |  </tab-control>
-      |  <tab-control title="Title 2">
-      |    Content 2
-      |  </tab-control>
-      |  <tab-control [title]="'Title 3'">
-      |    Content 3
-      |  </tab-control>
-      |</tab-pane>
-      |
-      |<dotted-string-list (seqChange)="printDotChange($event)" title="Dotted StringPair"></dotted-string-list>
-      |
-      |<string-list (seqChange)="printChange($event)"></string-list>
-      |<meta-control-component></meta-control-component>
-      |
-      |<login-area></login-area>
-      |<dot-control (valueSelected)="printInt($event)"></dot-control>
-      |
-      |<string-map (mapChange)="printKeyMap($event)"></string-map>
-      |
-      |
-      |<remark-component></remark-component>
+      |<google-plus-login></google-plus-login>
       |</div>
-      |
-    """.stripMargin
+      |""".stripMargin
 )
 class WorkbenchComponent {
 
-  //TODO: tab like pre choice for different protocols
+
+  private val temple = """      |<!-- tab-pane >
+                         |  <tab-control [title]="'Title 1'">
+                         |    Content 1
+                         |  </tab-control>
+                         |  <tab-control title="Title 2">
+                         |    Content 2
+                         |  </tab-control>
+                         |  <tab-control [title]="'Title 3'">
+                         |    Content 3
+                         |  </tab-control>
+                         |</tab-pane>
+                         |
+                         |<dotted-string-list (seqChange)="printDotChange($event)" title="Dotted StringPair"></dotted-string-list>
+                         |
+                         |
+                         |
+                         |<string-list (seqChange)="printChange($event)"></string-list>
+                         |<meta-control-component></meta-control-component>
+                         |
+                         |<login-area></login-area>
+                         |<dot-control (valueSelected)="printInt($event)"></dot-control>
+                         |
+                         |<string-map (mapChange)="printKeyMap($event)"></string-map>
+                         |
+                         |
+                         |<remark-component></remark-component -->
+                         |
+                         |</div>
+                         |
+                         |
+                         |
+    """.stripMargin
 
 
   def printInt(i : Int) : Unit = {
