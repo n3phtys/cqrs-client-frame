@@ -60,8 +60,11 @@ class TokenService {
   def setToken(newtoken : String)  : Unit = {
     if(newtoken.isEmpty) {
       org.scalajs.dom.window.localStorage.removeItem(localStorageTokenKey)
+      _innerCurrentToken.next(newtoken)
     } else {
+      println("Setting new token...")
       org.scalajs.dom.window.localStorage.setItem(localStorageTokenKey, newtoken)
+      _innerCurrentToken.next(newtoken)
     }
   }
 
@@ -72,8 +75,15 @@ class TokenService {
   private val _innerCurrentToken : BehaviorSubject[String] = BehaviorSubject(scanLocalStorage)
 
   val currentToken : Observable[String] = _innerCurrentToken.distinct
-
+  currentToken.subscribe(tok => println(s"Current Unparsed Token : $tok"))
   val currentIdentityToken : Observable[Option[IdentityToken]] = currentToken.map(s => OIDC.extractToken(s).toOption)
+  currentIdentityToken.subscribe(tok => println(s"Current Identity Token : $tok"))
+
+
+  def requestNewLogin() : Unit = {
+    println("Requesting new login")
+    clearToken()
+  }
 
   val currentEmail : Observable[String] = currentIdentityToken.map(i => i.map(_.email).getOrElse(">no email set<"))
 
@@ -101,7 +111,13 @@ class TokenService {
 
   val hasToken: Observable[Boolean] = currentIdentityToken.map(s => s.isDefined)
 
+  hasToken.subscribe(s => println(s"HasToken changed to $s"))
+
   val expirationTimestampMs : Observable[Long] = currentIdentityToken.map(i => i.map(_.exp_long).getOrElse(0L) * 1000L)
+
+  expirationTimestampMs.subscribe(l => if(l > 0 && l < System.currentTimeMillis()) {
+    requestNewLogin()
+  })
 
   println("created token service")
 

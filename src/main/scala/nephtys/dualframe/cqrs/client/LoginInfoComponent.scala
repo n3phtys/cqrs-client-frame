@@ -12,11 +12,14 @@ import scala.scalajs.js.Date
   selector = "login-info",
   template =
     """<div *ngIf="shown">
+       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#login-area-id">Show Login Infos</button>
+       <div id="login-area-id"  class="well well-sm collapse">
        <b>Here are informations about your currently used OAuth2 Token:</b>
       <ul>
        <li>Logged in as {{email}}</li>
        <li>Token is running out at {{date}}</li>
       </ul>
+      </div>
       </div>
     """
 )

@@ -14,12 +14,14 @@ import scala.scalajs.js
   template =
     """<div >
       |
-      |<div class="margineddiv" [hidden]="loggedIn"  >
+      |<div class="margineddiv"   >
       |<div id="googleLoginButtonId"></div>
       |</div>
       |
       |<div *ngIf="loggedIn">
-      |<login-info></login-info>
+      |
+      |<!--button type="button" class="btn btn-danger"  (click)="signOutClicked()" >Logout</button-->
+      |
       |</div>
       |
       |</div>""".stripMargin ,
@@ -34,6 +36,8 @@ class GooglePlusLoginComponent(val tokenService: TokenService) extends OnInit{
 
   var loggedIn : Boolean = false
 
+  tokenService.hasToken.subscribe(b => loggedIn = b)
+
 
 
   def onSignIn(googleUser : nephtys.gapi.auth2.GoogleUser) : Unit = {
@@ -44,26 +48,42 @@ class GooglePlusLoginComponent(val tokenService: TokenService) extends OnInit{
     println("Image URL: " + profile.getImageUrl())
     println("Email: " + profile.getEmail())
 
+    val idtoken = googleUser.getAuthResponse.id_token
+    println(s"ID token = $idtoken")
+    tokenService.setToken(idtoken)
   }
 
 
 
   private val onSignInFunc : js.Function1[nephtys.gapi.auth2.GoogleUser, Unit] = (googleUser : nephtys.gapi.auth2.GoogleUser) => onSignIn(googleUser)
 
-  private val timeoutMs : Long = 500
+  private val timeoutMs : Long = 300
 
   private val gapiRenderOptions = js.Dynamic.literal(
     onSuccess =  onSignInFunc,
-    scope = "profile",
-    theme = "dark"
+    scope = "openid email profile",
+    theme = "dark",
+    longtitle = false
   )
 
   println(s"Created at moment ${System.currentTimeMillis()}")
 
   override def ngOnInit(): Unit = {
-  val timeouthandler = setTimeout(timeoutMs) {
-    println(s"This works so far with $timeoutMs at ${System.currentTimeMillis()}")
-      nephtys.gapi.auth2.SignIn2.render("googleLoginButtonId", gapiRenderOptions)
+    renderLoginButton()
   }
+
+  private def renderLoginButton() : Unit = {
+    val timeouthandler = setTimeout(timeoutMs) {
+      println(s"This works so far with $timeoutMs at ${System.currentTimeMillis()}")
+      nephtys.gapi.auth2.SignIn2.render("googleLoginButtonId", gapiRenderOptions)
+    }
+  }
+
+
+  def signOutClicked() : Unit = {
+    println("Pressed Logout")
+    tokenService.clearToken()
+    val p = nephtys.gapi.auth2.Auth2.getAuthInstance().signOut()
+    renderLoginButton()
   }
 }
