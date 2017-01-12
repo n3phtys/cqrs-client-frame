@@ -15,7 +15,7 @@ import scala.scalajs.js
       |<div class="bordered">
       |<ul >
       |  <li *ngFor="let tab of tabs">
-      |    <a href="#" (click)="selectTab(tab)">{{tab.title}}</a>
+      |    <a (click)="selectTab(tab)">{{tab.title}}</a>
       |  </li>
       |</ul>
       |<ng-content></ng-content>

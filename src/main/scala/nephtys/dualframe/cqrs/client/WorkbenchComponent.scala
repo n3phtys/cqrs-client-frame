@@ -18,7 +18,8 @@ import angulate2.std.Component
 class WorkbenchComponent {
 
 
-  private val temple = """      |<!-- tab-pane >
+  private val temple = """
+                         |<!-- tab-pane >
                          |  <tab-control [title]="'Title 1'">
                          |    Content 1
                          |  </tab-control>
