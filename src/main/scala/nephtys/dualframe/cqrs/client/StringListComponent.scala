@@ -16,7 +16,7 @@ import scala.scalajs.js.JSConverters._
   selector = "string-list",
   template =
     """
-      |<h3>{{title}}</h3>
+      |<h4>{{title}}</h4>
       |
       | <form class="form-inline">
       |  <div class="form-group">
