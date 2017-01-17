@@ -144,10 +144,10 @@ class ControlComponent extends OnChanges{
     newReaderStr = ""
 
     if(input != null) {
-      public = input.public
-      owner = input.owner.email
+      public = input.metaInfo.public
+      owner = input.metaInfo.owner.email
       ownerStr = owner
-      readers = input.readers.map(_.email).toJSArray
+      readers = input.metaInfo.readers.map(_.email).toJSArray
     }
 
 
