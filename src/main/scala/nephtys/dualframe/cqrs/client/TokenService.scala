@@ -75,9 +75,9 @@ class TokenService {
   private val _innerCurrentToken : BehaviorSubject[String] = BehaviorSubject(scanLocalStorage)
 
   val currentToken : Observable[String] = _innerCurrentToken.distinct
-  currentToken.subscribe(tok => println(s"Current Unparsed Token : $tok"))
+  //currentToken.subscribe(tok => println(s"Current Unparsed Token : $tok"))
   val currentIdentityToken : Observable[Option[IdentityToken]] = currentToken.map(s => OIDC.extractToken(s).toOption)
-  currentIdentityToken.subscribe(tok => println(s"Current Identity Token : $tok"))
+  //currentIdentityToken.subscribe(tok => println(s"Current Identity Token : $tok"))
 
 
   def requestNewLogin() : Unit = {
@@ -111,7 +111,7 @@ class TokenService {
 
   val hasToken: Observable[Boolean] = currentIdentityToken.map(s => s.isDefined)
 
-  hasToken.subscribe(s => println(s"HasToken changed to $s"))
+  //hasToken.subscribe(s => println(s"HasToken changed to $s"))
 
   val expirationTimestampMs : Observable[Long] = currentIdentityToken.map(i => i.map(_.exp_long).getOrElse(0L) * 1000L)
 
@@ -121,5 +121,5 @@ class TokenService {
 
   println("created token service")
 
-  currentTokenWithBearerInFront.subscribe(i => println(i))
+  //currentTokenWithBearerInFront.subscribe(i => println(i))
 }

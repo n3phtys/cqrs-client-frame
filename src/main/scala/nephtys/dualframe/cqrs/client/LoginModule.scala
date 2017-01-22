@@ -9,9 +9,9 @@ import angulate2.std.{@@, NgModule}
   */
 @NgModule(
   imports = @@[BrowserModule, FormsModule],
-  providers = @@[TokenService],
-  declarations = @@[GooglePlusLoginComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
-  ,exports = @@[LoginComponent, GooglePlusLoginComponent, LoginInfoComponent]
+  providers = @@[TokenService, ServerURLService],
+  declarations = @@[GooglePlusLoginComponent, ServerURLComponent, LoginComponent, LoginControlComponent, LoginInfoComponent]
+  ,exports = @@[LoginComponent, ServerURLComponent, GooglePlusLoginComponent, LoginInfoComponent]
 )
 class LoginModule {
 

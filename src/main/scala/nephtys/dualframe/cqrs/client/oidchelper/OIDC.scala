@@ -40,15 +40,15 @@ object OIDC {
     if (splitted.length < 3) {
       Failure(new Exception("Not enough parts of JWT"))
     } else {
-      println(s"Splitted = ${splitted.mkString(" | ")}")
+      //println(s"Splitted = ${splitted.mkString(" | ")}")
       val split: String = splitted(1)
-      println(s"Split = $split")
+      //println(s"Split = $split")
       val decoded: Try[String] = decodeFromBase64(split)
       decoded.flatMap(s => {
-        println(s"Extract = $s")
+        //println(s"Extract = $s")
         Try {
           val t = read[IdentityToken](s)
-          println(s"Parsing worked for token $t")
+          //println(s"Parsing worked for token $t")
           t
         }
       })

@@ -16,7 +16,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Created by nephtys on 12/6/16.
   */
 @Injectable
-class HttpService(tokenService: TokenService) {
+class HttpService(tokenService: TokenService, serverURLService: ServerURLService) {
+
+  println("Initialized HTTP Service")
 
   private val _innnerOnline = BehaviorSubject[Boolean](true)
   val online: Observable[Boolean] = _innnerOnline.map(a => a)
@@ -24,35 +26,41 @@ class HttpService(tokenService: TokenService) {
   private val ETAG = "ETag"
 
   type EndpointRoot = String
-  def post(url : String, json : String, endpointRoot : Option[EndpointRoot]) : Future[HttpResult] = Ajax.post(endpointRoot.map(_ +"/").getOrElse("") + url, json, timeout = timeoutMs).map(result => {
-    val r : HttpResults.ResultCode = HttpResults.fromStatusCode(result.status)
-    var e : Option[ETag] = None
-    r match {
-      case NotFound => {
-        println("Http POST resource was not found / returned 404")
-        _innnerOnline.next(false)
+  def post(url : String, json : String, endpointRoot : Option[EndpointRoot]) : Future[HttpResult] = {
+    val urlFull = serverURLService.getUrl + "/" + endpointRoot.map(_ +"/").getOrElse("") + url
+    println(s"Posting to URL $urlFull")
+    Ajax.post(urlFull, json, timeout = timeoutMs).map(result => {
+      val r : HttpResults.ResultCode = HttpResults.fromStatusCode(result.status)
+      var e : Option[ETag] = None
+      r match {
+        case NotFound => {
+          println("Http POST resource was not found / returned 404")
+          _innnerOnline.next(false)
+        }
+        case NotAuthenticated => {
+          println("ERROR! User is not authenticated!")
+          tokenService.unauthenticatedHttpReturn()
+          _innnerOnline.next(false)
+        }
+        case CachedLocally => {
+          println("Return of POST was cached locally, no changes")
+          _innnerOnline.next(true)
+        }
+        case FreshSuccess => {
+          println(s"Successful HTTP Post return")
+          _innnerOnline.next(true)
+        }
+        case UnknownResultCode => {
+          println("received weird result code from http: " +result.status)
+        }
       }
-      case NotAuthenticated => {
-        println("ERROR! User is not authenticated!")
-        tokenService.unauthenticatedHttpReturn()
-        _innnerOnline.next(false)
-      }
-      case CachedLocally => {
-        println("Return of POST was cached locally, no changes")
-        _innnerOnline.next(true)
-      }
-      case FreshSuccess => {
-        println(s"Successful HTTP Post return")
-        _innnerOnline.next(true)
-      }
-      case UnknownResultCode => {
-        println("received weird result code from http: " +result.status)
-      }
-    }
-    HttpResult(r, result.responseText, e)
-  })
+      HttpResult(r, result.responseText, e)
+    })
+  }
   def get(url : String, endpointRoot : Option[EndpointRoot] = None) : Future[HttpResult] = {
-    Ajax.get(endpointRoot.map(_ +"/").getOrElse("") + url, timeout = timeoutMs).map(result => {
+    val urlFull = serverURLService.getUrl + "/" + endpointRoot.map(_ +"/").getOrElse("") + url
+    println(s"Get called at url $urlFull")
+    Ajax.get(urlFull, timeout = timeoutMs).map(result => {
       val r : HttpResults.ResultCode = HttpResults.fromStatusCode(result.status)
       var e : Option[ETag] = None
       r match {
