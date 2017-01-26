@@ -50,18 +50,17 @@ class StringMapComponent extends OnChanges {
   var headers: Array[String] = input.map(_._1).toJSArray
   var values: Array[String] = input.map(_._2).toJSArray
 
-  private var blocked : Boolean = false
 
 
   val debouncer: BehaviorSubject[Seq[(String, String)]] = BehaviorSubject[Seq[(String, String)]](Seq.empty)
 
-  val debounced: Subscription = debouncer.debounceTime(FiniteDuration(600, TimeUnit.MILLISECONDS)).filter(_.nonEmpty).subscribe(s => {
-    blocked = false
+  val debounced: Subscription = debouncer.debounceTime(FiniteDuration(5000, TimeUnit.MILLISECONDS)).filter(_.nonEmpty).subscribe(s => {
+
     mapChange.emit(s)
   })
 
   def onTextChange(index : Int) : Unit = {
-    blocked = true
+
       if (cached.toMap[String,String].apply(headers(index)) != values(index)) {
         mapChanged(headers.zip(values))
       } else {
