@@ -28,8 +28,8 @@ import scala.scalajs.js.JSConverters._
       |
       | <div class="items">
       |  <div class="item" *ngFor="let item of internalStrings; let i = index">
-      |  <button (click)="removeBtnClicked(i)" *ngIf="! internalEditStates[i]"  class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span></button>
-      |  <button (click)="editBtnClicked(i)" *ngIf="! internalEditStates[i]"  class="btn btn-info" ><span class="glyphicon glyphicon-pencil"></span></button>
+      |  <button (click)="removeBtnClicked(i)" *ngIf="enableRemove && ! internalEditStates[i]"  class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span></button>
+      |  <button (click)="editBtnClicked(i)" *ngIf="enableEdit && ! internalEditStates[i]"  class="btn btn-info" ><span class="glyphicon glyphicon-pencil"></span></button>
       |  <div class="form-group">
       |  <input type="text" *ngIf="internalEditStates[i]" class="form-control" [(ngModel)]="internalEditStrings[i]">
       |  </div>
@@ -66,6 +66,14 @@ class StringListComponent extends OnChanges{
 
   @Input
   var input : Seq[String] = Seq.empty
+
+
+  @Input
+  var enableEdit : Boolean = true
+
+
+  @Input
+  var enableRemove : Boolean = true
 
 
   var inputStrings : js.Array[String] = js.Array("Note A",
